@@ -136,12 +136,13 @@ jobs:
       - name: 🛠 Build
         run: npm run build
 
+      - name: 🔑 Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: 🚀 Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           package: ${{ secrets.AZURE_WEBAPP_PACKAGE_PATH }}
-          slot-name: 'production'
-        env:
-          AZURE_WEBAPP_PACKAGE_PATH: .
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
